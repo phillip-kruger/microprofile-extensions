@@ -161,5 +161,6 @@
     
     <modules>
         <module>memory-config</module>
+        <module>config-converters</module>
     </modules>
 </project>
