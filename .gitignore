@@ -22,3 +22,4 @@
 hs_err_pid*
 /memory-config/target/
 /config-converters/target/
+/cdi-filter/target/
