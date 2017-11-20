@@ -163,5 +163,6 @@
         <module>memory-config</module>
         <module>config-converters</module>
         <module>cdi-filter</module>
+        <module>file-config</module>
     </modules>
 </project>
