@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
 import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
@@ -21,8 +22,6 @@ public class FileConfigSource implements ConfigSource {
     private static final Map<String,String> PROPERTIES = new HashMap<>();
     
     public FileConfigSource(){
-        log.severe("============= Now loading Fileconfig source ===============");
-        
         String filename;
         String path = System.getProperty(PATH_PROPERTY);
         if(path==null || path.isEmpty()){
@@ -30,25 +29,20 @@ public class FileConfigSource implements ConfigSource {
         }else{
             filename = path;
         }
+        
+        File f = new File(filename);
+        
         try {
-            log.severe("Looking for property [" + filename + "]");
-
             Properties p = new Properties();
+            p.load(new FileInputStream(f));
+            Set<Map.Entry<Object, Object>> entrySet = p.entrySet();
 
-            File f = new File(filename);
-            //if(f.exists() && f.isFile()){
-                log.severe("file = " + f.getAbsolutePath());
-                p.load(new FileInputStream(f));
-
-                Set<Map.Entry<Object, Object>> entrySet = p.entrySet();
-
-                entrySet.forEach((entry) -> {
-                    log.severe(">>>> loading [" + entry.getKey() + "]");
-                    PROPERTIES.put((String)entry.getKey(),(String)entry.getValue());
-                });
-            //}
+            entrySet.forEach((entry) -> {
+                PROPERTIES.put((String)entry.getKey(),(String)entry.getValue());
+            });
+            
         } catch (IOException ex) {
-            ex.printStackTrace();
+            log.log(Level.SEVERE, "FileConfigSource did not find properties file [{0}]", f.getAbsolutePath());
         }
     }
     
