@@ -42,7 +42,7 @@ public class FileConfigSource implements ConfigSource {
             });
             
         } catch (IOException ex) {
-            log.log(Level.SEVERE, "FileConfigSource did not find properties file [{0}]", f.getAbsolutePath());
+            log.log(Level.INFO, "FileConfigSource did not find properties file [{0}]", f.getAbsolutePath());
         }
     }
     
