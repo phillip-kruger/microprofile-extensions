@@ -4,7 +4,7 @@
     
     <groupId>com.github.phillip-kruger</groupId>
     <artifactId>microprofile-extentions</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
     
     <name>microprofile-extentions</name>
@@ -161,8 +161,8 @@
     
     <modules>
         <module>memory-config</module>
+        <module>file-config</module>
         <module>config-converters</module>
         <module>cdi-filter</module>
-        <module>file-config</module>
     </modules>
 </project>
