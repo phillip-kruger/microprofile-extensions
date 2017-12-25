@@ -1,0 +1,44 @@
+## see https://travis-ci.org/phillip-kruger/apiee
+language: java
+
+## export GPG details
+before_install:
+    - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+    - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+  
+install:
+    mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+
+## Build and release to maven central  
+script: 
+    mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
+
+## Get the project version
+before_deploy:
+    - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+    - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+
+## Create release in GitHub    
+deploy:
+    provider: releases
+    api_key:
+        secure: kEmbwstjQDAjsl3TR4d0rMFP99ZL4t9Sa19Bfx2FfwlStiwWyLDw9bmNGkYQyuvpMTh6igWfvx1sTvOhKqVGDCdj89/5GJquIrfPNJSJXPr3KP4zdU6xEhK57gGCa4IfMF5jcAe24z6fOrPLzEVyqMBrIxu8RQryqfqPtVvRj+uDI0xn6IPxGZ6nc97IRcIykwufNChsMOavE595FXn9WmVSBd/O+VY4LLefRLOFWxL1dTGlUxJLzSAYEVTCxYnz+lbCmfbyreu9eSmDZRnti78cjss2cHDzkInl/P1U7AXj6My0JJ8+TsVHt/HBLYDsEotv/ayTxH859qjDpvkL3FRoXEv4PtVn8TsyUjfJoCwwU5/pvFGElIlE2l6tpfnmSKkJ70eADIzox4Qi+biNx7M+mXC8tl7S0r+mSI2kjJgUMAZjjbbZQnBQ+RQCPKcseB0X2bXKxOmFb+t4OGZ9BXZWmxFXcljgiSu+Fbz2VRaTPG3OSjjIiOPeE3NdfJwoHrqBDcMzsh0c+UCTjpqghI0jHPZe8BcySEjJ5yUM74cUtGuhPru4Hs0xTKOKUubUFQ9oOsKLSgWNg28Px6BhMbEucs/8AZHtT1EiGEJPV7JB/i7qVPYGhGhWKF4id08GOhh+pd1lbNyO+Y0G1wG+VBtRjiqPIIN+NqXZbfi4goM=
+    file:
+        - memory-config/target/memory-config-$project_version.jar
+        - file-config/target/file-config-$project_version.jar
+        - config-converters/target/config-converters-$project_version.jar
+        - cdi-filter/target/cdi-filter-$project_version.jar
+    skip_cleanup: true
+    on:
+        repo: phillip-kruger/microprofile-extentions
+    name: $project_version
+    
+cache:
+    directories:
+        - ~/.m2/repository
+
+# Send a slack notification    
+notifications:
+    email: false
+    slack:
+        secure: rYI40a4SNn6S9cHbX5PyLmGj2C/aCPEr6R6AlXFxCGQ2ynzSRJvtOvHs2SCg91pCa912zeii01CzxGuT7JKq5P6ZsgBlD4XtaZUqduejBthyiHisYnQmiPsY4N0Ma0grk6bGY1gAS0eXOTaci7a9YhfceuTgDcytPfOGXPutipJ33zwRZ9YEcuikeM7Or34Ru8A8xb75XCU+lC5Xo4Td/7Km8Dav7xgzJWUAMmK6QT3PROgNcgbUdQ0DzAujmaIKi4hL75Nj0QDMr/eC3i7V3nGLrhjr8Fu6dyMHKLySgRit7eEPjC1llzalf/M6mwAI7EEcpdK9JihpVqwdDeCnePrcTHRW92bblmevXcc89yAYRn/6ypJ08qD+USoZBgU4KO9W1Qu/txod9/UBbyophTUptBOsEStIlYAmJ0vKxvMvak3zY/qdGexm1ynX3ENUbmP6D2+iwPzBrAikxvAgCSasOGSVy4uGOBvSay1HX7BMm6/N1plr+rvCnaJdfu9lQlR0jWzhaSZ0qfbiO++AaXOkeTyqPLgFItVl3d0upwOEjDwlm1c441NxlwayexC+OaQMgSfu4KCuAop83DaaOR2lp0Wz/RbkbXzhRxhqxJTrRK9OnNzWSqDOwYRE7bVpbJxE1DV1CnY5ROwswExKCZ9DG6GDgjqt06Emxo20Wuo=
