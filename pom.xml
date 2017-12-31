@@ -4,7 +4,7 @@
     
     <groupId>com.github.phillip-kruger</groupId>
     <artifactId>microprofile-extentions</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
     
     <name>microprofile-extentions</name>
@@ -56,7 +56,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         
         <!-- JEE Platform -->        
-        <jee.version>8.0</jee.version>
+        <javaee.version>7.0</javaee.version>
         <lombok.version>1.16.18</lombok.version>
         <microProfile.version>1.2</microProfile.version>
     </properties>
@@ -66,7 +66,7 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>${jee.version}</version>
+            <version>${javaee.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- MicroProfile -->

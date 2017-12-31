@@ -12,8 +12,18 @@ public class ArrayConverter implements Converter<String[]> {
 
     @Override
     public String[] convert(String input) throws IllegalArgumentException {
-        Stream<String> language = Stream.of(input);
-        return language.collect(Collectors.toList()).toArray(new String[]{});
+        if(isNullOrEmpty(input))return new String[]{};
+        
+        Stream<String> stream = Stream.of(input);
+        return stream.collect(Collectors.toList()).toArray(new String[]{});
     }
     
+    /**
+      * Not to sure about this, got an javax.json.stream.JsonParsingException in Wildfly with a value of org.eclipse.microprofile.config.configproperty.unconfigureddvalue
+    **/
+    private boolean isNullOrEmpty(String input){
+        return input==null || input.isEmpty() || input.equals(UNCONFIGURED_VALUE);
+    }
+    
+    private static final String UNCONFIGURED_VALUE = "org.eclipse.microprofile.config.configproperty.unconfigureddvalue";
 }
