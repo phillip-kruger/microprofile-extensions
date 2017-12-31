@@ -48,5 +48,5 @@ Example:
     
     @Inject
     @ConfigProperty(name = "someKey")
-    private JsonArray someKey;
+    private JsonArray someValue;
     
