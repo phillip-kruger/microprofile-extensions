@@ -15,7 +15,7 @@ MicroProfile config from external file
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
         <artifactId>file-config</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </dependency>
 
 ## Memory config
@@ -24,7 +24,7 @@ MicroProfile config in memory
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
         <artifactId>memory-config</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </dependency>
 
 REST Paths avaialble:
@@ -41,7 +41,7 @@ Extra MicroProfile converters (JsonArray, JsonObject, List, Array)
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
         <artifactId>config-converters</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </dependency>
 
 Example:
