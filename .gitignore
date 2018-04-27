@@ -24,3 +24,5 @@ hs_err_pid*
 /config-converters/target/
 /cdi-filter/target/
 /file-config/target/
+/health-ext/target/
+/config-ext/target/

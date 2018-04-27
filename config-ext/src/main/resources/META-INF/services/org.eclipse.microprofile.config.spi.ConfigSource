@@ -1,0 +1,2 @@
+com.github.phillipkruger.microprofileextentions.config.FileConfigSource
+com.github.phillipkruger.microprofileextentions.config.MemoryConfigSource

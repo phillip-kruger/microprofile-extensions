@@ -8,24 +8,21 @@ Tested with
 
 * [Open Liberty](https://openliberty.io/)
 * [Wildfly swarm](http://wildfly-swarm.io/)
+* [Payara](https://www.payara.fish/)
 
-## File config 
-MicroProfile config from external file
-
-    <dependency>
-        <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
-        <artifactId>file-config</artifactId>
-        <version>1.0.2</version>
-    </dependency>
-
-## Memory config
-MicroProfile config in memory
+## Config API Extentions
 
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
-        <artifactId>memory-config</artifactId>
-        <version>1.0.2</version>
+        <artifactId>config-ext</artifactId>
+        <version>1.0.3</version>
     </dependency>
+
+### File config
+
+TODO
+
+### Memory config
 
 REST Paths avaialble:
 
@@ -35,18 +32,22 @@ REST Paths avaialble:
     PUT /config/key/{key} - set the value for {key}
     DELETE /config/key/{key} - delete the configured value for {key}
 
-## Config converters 
-Extra MicroProfile converters (JsonArray, JsonObject, List, Array)
+### Config converters 
 
-    <dependency>
-        <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
-        <artifactId>config-converters</artifactId>
-        <version>1.0.2</version>
-    </dependency>
+Extra MicroProfile converters (JsonArray, JsonObject, List, Array)
 
 Example:
     
     @Inject
     @ConfigProperty(name = "someKey")
     private JsonArray someValue;
-    
+
+## Health API Extentions
+
+    <dependency>
+        <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
+        <artifactId>health-ext</artifactId>
+        <version>1.0.3</version>
+    </dependency>
+
+Go to /health to see all default providers
