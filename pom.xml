@@ -4,10 +4,10 @@
     
     <groupId>com.github.phillip-kruger</groupId>
     <artifactId>microprofile-extentions</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <packaging>pom</packaging>
     
-    <name>microprofile-extentions</name>
+    <name>Microprofile extentions</name>
     <url>https://github.com/phillip-kruger/microprofile-extentions</url>
     <description>Some general extentions for Java EE Miroprofile projects</description>
     

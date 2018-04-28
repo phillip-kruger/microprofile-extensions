@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.github.phillip-kruger</groupId>
         <artifactId>microprofile-extentions</artifactId>
-        <version>1.0.3-SNAPSHOT</version>
+        <version>1.0.3</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -12,7 +12,7 @@
     <artifactId>cdi-filter</artifactId>
     <packaging>jar</packaging>
     
-    <name>cdi-filter</name>
+    <name>Microprofile extentions :: CDI Filter</name>
     <description>Simple to use filter for CDI</description>
     
 </project>

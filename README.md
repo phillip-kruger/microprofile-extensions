@@ -1,8 +1,14 @@
 # Microprofile extentions
 
- * Build status: [![build_status](https://travis-ci.org/phillip-kruger/microprofile-extentions.svg?branch=master)](https://travis-ci.org/phillip-kruger/microprofile-extentions)
+> Some extentions for MicroProfile
 
-Some extentions for MicroProfile
+[![Build Status](https://travis-ci.org/phillip-kruger/microprofile-extentions.svg?branch=master)](https://travis-ci.org/phillip-kruger/microprofile-extentions)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.phillip-kruger/microprofile-extentions/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.phillip-kruger/microprofile-extentions)
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/phillip-kruger/microprofile-extentions/master/LICENSE)
+
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/phillipkruger)
+
+> phillip.kruger@phillip-kruger.com
 
 Tested with 
 
@@ -20,11 +26,14 @@ Tested with
 
 ### File config
 
-TODO
+Add config elements in a Properties file (application.properties)
 
 ### Memory config
 
-REST Paths avaialble:
+Set values in memory. Useful when you want to change config during runtime.
+
+
+REST API available:
 
     GET /config/sources - list all config sources
     GET /config/all - get all configurations
@@ -51,3 +60,8 @@ Example:
     </dependency>
 
 Go to /health to see all default providers
+
+* HeapMemoryHealthCheck - this will report DOWN when the heap memory reach a certain percentage of total heap available. Default to 90% (0.9). You can configure this value with the Config API (health.heapmemory.maxpercentage)
+* NonHeapMemoryHealthCheck - this will report DOWN when the memory reach a certain percentage of total available memory. Default to 90% (0.9). You can configure this value with the Config API (health.memory.maxpercentage)
+* SystemLoadHealthCheck - this will report DOWN when the system load reach a certain percentage. Default to 70% (0.7). You can configure this value with the Config API (health.systemload.maxpercentage)
+* ThreadHealthCheck - this will report DOWN when a certain number of threads are reached. Default to 9999999. You can configure this value with the Config API (health.threadcount.max)
