@@ -3,15 +3,23 @@ package com.github.phillipkruger.microprofileextentions.health;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
 
+/**
+ * Checking the number of threads
+ * @author Phillip Kruger (phillip.kruger@phillip-kruger.com)
+ */
 @Health
 @ApplicationScoped
 public class ThreadHealthCheck implements HealthCheck {
-
+    @Inject @ConfigProperty(name = "health.threadcount.max", defaultValue = "9999999")
+    private double maxThreadCount;
+    
     @Override
     public HealthCheckResponse call() {
         ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
@@ -35,9 +43,13 @@ public class ThreadHealthCheck implements HealthCheck {
                 .withData("deadlocked thread count", deadlockedThreadCount)
                 .withData("monitor deadlocked thread count", monitorDeadlockedThreadCount);
 
-        boolean status = true;
-
-        return responseBuilder.state(status).build();
+        if(threadCount > 0 ){
+            boolean status = threadCount < maxThreadCount;
+            return responseBuilder.state(status).build();
+        }else{
+            // Thread count not available
+            return responseBuilder.up().build();
+        }
 
     }
     
