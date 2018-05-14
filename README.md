@@ -93,3 +93,5 @@ You can change some values using MicroProfile config API:
 * openapi-ui.createdWithVisibility- Show/hide the created with footer. Default to "visible".
 
 #### Screenshot
+
+![screenshot](https://raw.githubusercontent.com/phillip-kruger/microprofile-extentions/master/openapi-ext/screenshot.png)
