@@ -12,14 +12,13 @@ import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
 
 /**
  * Checking average load usage against configured max load
- * @see http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages
  * @author Phillip Kruger (phillip.kruger@phillip-kruger.com)
  */
 @Health
 @ApplicationScoped
 public class SystemLoadHealthCheck implements HealthCheck {
 
-    @Inject @ConfigProperty(name = "health.systemload.maxpercentage", defaultValue = "0.70")
+    @Inject @ConfigProperty(name = "health.systemload.maxpercentage", defaultValue = "0.7")
     private double maxPercentage;
     
     @Override
