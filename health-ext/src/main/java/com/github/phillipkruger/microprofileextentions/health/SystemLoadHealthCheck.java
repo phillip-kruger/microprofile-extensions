@@ -19,7 +19,7 @@ import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
 @ApplicationScoped
 public class SystemLoadHealthCheck implements HealthCheck {
 
-    @Inject @ConfigProperty(name = "health.systemload.maxpercentage", defaultValue = "0.7")
+    @Inject @ConfigProperty(name = "health.systemload.maxpercentage", defaultValue = "0.70")
     private double maxPercentage;
     
     @Override
