@@ -26,3 +26,4 @@ hs_err_pid*
 /file-config/target/
 /health-ext/target/
 /config-ext/target/
+/openapi-ext/target/

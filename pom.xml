@@ -163,5 +163,6 @@
         <module>cdi-filter</module>
         <module>health-ext</module>
         <module>config-ext</module>
+        <module>openapi-ext</module>
     </modules>
 </project>

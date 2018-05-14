@@ -17,8 +17,8 @@ import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
 @Health
 @ApplicationScoped
 public class ThreadHealthCheck implements HealthCheck {
-    @Inject @ConfigProperty(name = "health.threadcount.max", defaultValue = "9999999")
-    private double maxThreadCount;
+    @Inject @ConfigProperty(name = "health.threadcount.max", defaultValue = "-1") // default swatched off
+    private long maxThreadCount;
     
     @Override
     public HealthCheckResponse call() {
@@ -41,9 +41,10 @@ public class ThreadHealthCheck implements HealthCheck {
                 .withData("daemon thread count", daemonThreadCount)
                 .withData("started thread count", totalStartedThreadCount)
                 .withData("deadlocked thread count", deadlockedThreadCount)
-                .withData("monitor deadlocked thread count", monitorDeadlockedThreadCount);
+                .withData("monitor deadlocked thread count", monitorDeadlockedThreadCount)
+                .withData("max thread count", maxThreadCount);
 
-        if(threadCount > 0 ){
+        if(threadCount > 0 && maxThreadCount > 0){
             boolean status = threadCount < maxThreadCount;
             return responseBuilder.state(status).build();
         }else{
