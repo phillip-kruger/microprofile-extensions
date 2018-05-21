@@ -27,3 +27,4 @@ hs_err_pid*
 /health-ext/target/
 /config-ext/target/
 /openapi-ext/target/
+/jaxrs-ext/target/

@@ -1,4 +1,4 @@
-package com.github.phillipkruger.microprofileextentions.cdifilter;
+package com.github.phillipkruger.microprofileextentions.cdi;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

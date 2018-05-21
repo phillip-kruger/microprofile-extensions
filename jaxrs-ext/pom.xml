@@ -9,10 +9,10 @@
     </parent>
     
     <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
-    <artifactId>cdi-filter</artifactId>
+    <artifactId>jaxrs-ext</artifactId>
     <packaging>jar</packaging>
     
-    <name>Microprofile extentions :: CDI</name>
-    <description>Simple to use filter for CDI</description>
+    <name>Microprofile extentions :: JAX-RS</name>
+    <description>Some extentions for JAX-RS</description>
     
 </project>

@@ -164,5 +164,6 @@
         <module>health-ext</module>
         <module>config-ext</module>
         <module>openapi-ext</module>
+        <module>jaxrs-ext</module>
     </modules>
 </project>

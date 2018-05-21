@@ -1,4 +1,4 @@
-package com.github.phillipkruger.microprofileextentions.cdifilter;
+package com.github.phillipkruger.microprofileextentions.cdi;
 
 import javax.enterprise.util.AnnotationLiteral;
 import lombok.AllArgsConstructor;
