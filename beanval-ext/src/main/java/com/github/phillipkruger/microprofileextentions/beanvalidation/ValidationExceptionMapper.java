@@ -1,8 +1,14 @@
-package com.github.phillipkruger.microprofileextentions.jaxrs;
+package com.github.phillipkruger.microprofileextentions.beanvalidation;
 
 import java.util.Iterator;
 import java.util.Set;
+import javax.validation.ConstraintViolationException;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
+import lombok.extern.java.Log;
 
 /**
  * Translate Java validation exceptions to HTTP response
@@ -10,11 +16,15 @@ import javax.ws.rs.core.Response;
  * 
  * 412 Precondition Failed (RFC 7232): The server does not meet one of the preconditions that the requester put on the request
  */
-public class ValidationExceptionMapper {
+@Log
+@Provider
+public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
     private static final String EMPTY = "";
     
-    public Response toResponse(RuntimeException exception) {
-        Set<javax.validation.ConstraintViolation<?>> violations = ((javax.validation.ConstraintViolationException)exception).getConstraintViolations();
+    @Override
+    @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+    public Response toResponse(ConstraintViolationException constraintViolationException) {
+        Set<javax.validation.ConstraintViolation<?>> violations = constraintViolationException.getConstraintViolations();
         
         ValidationErrors errors = new ValidationErrors();
         // Real jsr validation errors
@@ -31,10 +41,10 @@ public class ValidationExceptionMapper {
                 }
             }// We throw the exception
         }else{
-           String message = exception.getMessage();
+           String message = constraintViolationException.getMessage();
            errors.getValidationError().add(new ValidationError(message,EMPTY,EMPTY));
         }
-        return Response.status(Response.Status.PRECONDITION_FAILED).header(REASON, exception.getMessage()).entity(errors).build();
+        return Response.status(Response.Status.PRECONDITION_FAILED).header(REASON, constraintViolationException.getMessage()).entity(errors).build();
     }
     
     private static final String REASON = "reason";

@@ -1,4 +1,4 @@
-package com.github.phillipkruger.microprofileextentions.jaxrs;
+package com.github.phillipkruger.microprofileextentions.beanvalidation;
 
 import java.util.ArrayList;
 import java.util.List;

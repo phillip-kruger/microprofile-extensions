@@ -17,8 +17,7 @@ import org.eclipse.microprofile.config.Config;
  * Translate Runtime exceptions to HTTP response
  * @author Phillip Kruger (phillip.kruger@phillip-kruger.com)
  * 
- * Because we do not know if all classes is available at runtime (fractions in wildfly-swarm) we can not annotate all mappers with @Provider.
- * So this RuntimeExeptionMapper will try and use the correct mapper at runtime.
+ * This mapper use MicroProfile Config to look for exceptionmapper.some.exception.class to find the HTTP Response Code to use
  * 
  * If it can not find any mapper, it will fallback to:
  *  500 Internal Server Error - A generic error message, given when an unexpected condition was encountered and no more specific message is suitable
@@ -31,10 +30,11 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
     @Inject
     private Config config;
     
-    @Context Providers providers;
+    @Context 
+    private Providers providers;
     
     @Override
-    @Produces(MediaType.WILDCARD)
+    @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response toResponse(RuntimeException exception) {
         
         // First try dynamic configured 
@@ -42,21 +42,13 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
         Optional<Integer> posibleDynamicMapperValue = config.getOptionalValue(configkey,Integer.class);
         if(posibleDynamicMapperValue.isPresent()){
             int status = posibleDynamicMapperValue.get();
+            if(status<0){ // You switched it off
+                return unknownRuntimeResponse(exception);
+            }
             return Response.status(status).header(REASON, exception.getMessage()).build();
         } else {
-        
-            // Handle some included mappers
-            switch (exception.getClass().getName()) {
-                case CONSTRAINT_VIOLATION:
-                    return validationExceptionMapper.toResponse(exception);
-                case EJB:
-                    return ejbExceptionMapper.toResponse(providers,exception);
-                default:
-                    return unknownRuntimeResponse(exception);
-            }
+            return unknownRuntimeResponse(exception);
         }
-        
-        
     }
     
     private Response unknownRuntimeResponse(RuntimeException exception) {
@@ -80,11 +72,5 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
     }
     
     private static final String REASON = "reason";
-    
-    private static final String CONSTRAINT_VIOLATION = "javax.validation.ConstraintViolationException";
-    private static final String EJB = "javax.ejb.EJBException";
-    
-    private final ValidationExceptionMapper validationExceptionMapper = new ValidationExceptionMapper();
-    private final EJBExceptionMapper ejbExceptionMapper = new EJBExceptionMapper();
     
 }

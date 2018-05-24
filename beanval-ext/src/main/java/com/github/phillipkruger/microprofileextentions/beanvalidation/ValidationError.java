@@ -1,4 +1,4 @@
-package com.github.phillipkruger.microprofileextentions.jaxrs;
+package com.github.phillipkruger.microprofileextentions.beanvalidation;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
