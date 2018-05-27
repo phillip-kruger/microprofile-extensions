@@ -166,5 +166,6 @@
         <module>openapi-ext</module>
         <module>jaxrs-ext</module>
         <module>beanval-ext</module>
+        <module>restclient-ext</module>
     </modules>
 </project>

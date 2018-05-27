@@ -1,6 +1,9 @@
 package com.github.phillipkruger.microprofileextentions.jaxrs;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import javax.inject.Inject;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -37,18 +40,35 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response toResponse(RuntimeException exception) {
         
-        // First try dynamic configured 
-        String configkey = "exceptionmapper." + exception.getClass().getName();
+        String configkey = exception.getClass().getName() + STATUS_CODE_KEY;
+        
         Optional<Integer> posibleDynamicMapperValue = config.getOptionalValue(configkey,Integer.class);
         if(posibleDynamicMapperValue.isPresent()){
             int status = posibleDynamicMapperValue.get();
             if(status<0){ // You switched it off
                 return unknownRuntimeResponse(exception);
             }
-            return Response.status(status).header(REASON, exception.getMessage()).build();
+            String reason = getReason(exception);
+            log.log(Level.FINEST, reason, exception);
+            return Response.status(status).header(REASON, reason).build();
         } else {
             return unknownRuntimeResponse(exception);
         }
+    }
+    
+    
+    private String getReason(Throwable exception){
+        String reason = exception.getMessage();
+        if(reason==null || reason.isEmpty()){
+            // Lets try the cause ?
+            final Throwable cause = exception.getCause();
+            if (cause != null){
+                return getReason(cause);
+            }else{
+                return "Unknown [" + exception.getClass().getName() + "] exception";
+            }
+        }
+        return reason;
     }
     
     private Response unknownRuntimeResponse(RuntimeException exception) {
@@ -60,17 +80,33 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
             } else if (cause instanceof WebApplicationException) {
                 return ((WebApplicationException) cause).getResponse();
             }
-            // We did not map the cause exception.
-            // So this is a server error
-            return noMapResponse(cause);
         }
         return noMapResponse(exception);
     }
     
     private Response noMapResponse(final Throwable exception){
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header(REASON, exception.getMessage()).build();
+        log.log(Level.SEVERE, "Unmapped Runtime Exception", exception);
+        
+        List<String> reasons = getReasons(exception, new ArrayList<>());
+        
+        Response.ResponseBuilder builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+        for(String reason:reasons){
+            builder = builder.header(REASON, reason);
+        }
+        
+        return builder.build();
+    }
+    
+    private List<String> getReasons(final Throwable exception,List<String> reasons){
+        if(exception.getMessage()!=null)reasons.add(exception.getMessage());
+        if(exception.getCause()!=null){
+            return getReasons(exception.getCause(), reasons);
+        } else {
+            return reasons;
+        }
+        
     }
     
     private static final String REASON = "reason";
-    
+    private static final String STATUS_CODE_KEY = "/mp-jaxrs-ext/statuscode";
 }
