@@ -42,10 +42,11 @@ public class RuntimeResponseExceptionMapper implements ResponseExceptionMapper<R
         
         String exceptionClassName = config.getValue(key, String.class);
         
-        log.log(Level.SEVERE, ">>>> Mapping {0} to {1}", new Object[]{status, exceptionClassName});
-        
-        return instanciateRuntimeException(exceptionClassName,reason);
+        if(exceptionClassName!=null && !exceptionClassName.isEmpty()){
+            return instanciateRuntimeException(exceptionClassName,reason);
+        }
 
+        throw new RuntimeException("Unmapped response [" + status + "] - " + reason);
     }
 
     @Override

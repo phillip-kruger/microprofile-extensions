@@ -167,5 +167,6 @@
         <module>jaxrs-ext</module>
         <module>beanval-ext</module>
         <module>restclient-ext</module>
+        <module>jwt-user-ext</module>
     </modules>
 </project>
