@@ -1,6 +1,7 @@
 package com.github.phillipkruger.microprofileextentions.openapi;
 
 import java.net.URI;
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -20,6 +21,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
  */
 @Log
 @Path("/openapi-ui/")
+@PermitAll
 public class OpenApiUiService {  
     
     @Inject
