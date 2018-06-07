@@ -32,3 +32,4 @@ hs_err_pid*
 /restclient-ext/target/
 /jwt-ext/target/
 /jwt-user-ext/target/
+/jwt-issuer-ext/target/

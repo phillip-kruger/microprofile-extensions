@@ -9,17 +9,18 @@
     </parent>
     
     <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
-    <artifactId>jwt-user-ext</artifactId>
+    <artifactId>jwt-issuer-ext</artifactId>
     <packaging>jar</packaging>
     
-    <name>Microprofile extentions :: JWT User</name>
-    <description>Some user utils for JWT</description>
+    <name>Microprofile extentions :: JWT Issuer</name>
+    <description>A basic JWT Issuer</description>
     
     <dependencies>
+        <!-- To generate the JWT token -->
         <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils-core</artifactId>
-            <version>1.8.3</version>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>5.10</version>
         </dependency>
     </dependencies>
     
