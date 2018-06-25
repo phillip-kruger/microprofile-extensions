@@ -83,12 +83,16 @@ public class Templates {
         html = html.replaceAll(VAR_CURRENT_YEAR, getCopyrightYear());
         
         // Dynamic whitelabel properties.
-        Iterable<String> propertyNames = config.getPropertyNames();
-        for(String key: propertyNames){
-            if(key.startsWith(KEY_IDENTIFIER) && !isKnownProperty(key)){
-                String htmlKey = PERSENTAGE + key + PERSENTAGE;
-                html = html.replaceAll(htmlKey, config.getValue(key,String.class));
+        try {
+            Iterable<String> propertyNames = config.getPropertyNames();
+            for(String key: propertyNames){
+                if(key.startsWith(KEY_IDENTIFIER) && !isKnownProperty(key)){
+                    String htmlKey = PERSENTAGE + key + PERSENTAGE;
+                    html = html.replaceAll(htmlKey, config.getValue(key,String.class));
+                }
             }
+        }catch(UnsupportedOperationException uoe){
+            log.warning("Can not replace dynamic properties in the Open API Swagger template. " + uoe.getMessage());
         }
         // Then properties with defaults.
         html = html.replaceAll(VAR_COPYRIGHT_BY, copyrightBy);

@@ -1,4 +1,4 @@
-com.github.phillipkruger.microprofileextentions.converter.ListConverter
-com.github.phillipkruger.microprofileextentions.converter.ArrayConverter
-com.github.phillipkruger.microprofileextentions.converter.JsonObjectConverter
-com.github.phillipkruger.microprofileextentions.converter.JsonArrayConverter
+com.github.phillipkruger.microprofileextentions.config.converter.ListConverter
+com.github.phillipkruger.microprofileextentions.config.converter.ArrayConverter
+com.github.phillipkruger.microprofileextentions.config.converter.JsonObjectConverter
+com.github.phillipkruger.microprofileextentions.config.converter.JsonArrayConverter

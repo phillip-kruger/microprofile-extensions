@@ -41,13 +41,11 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
     public Response toResponse(RuntimeException exception) {
         
         String configkey = exception.getClass().getName() + STATUS_CODE_KEY;
-        
-        Optional<Integer> posibleDynamicMapperValue = config.getOptionalValue(configkey,Integer.class);
-        if(posibleDynamicMapperValue.isPresent()){
-            int status = posibleDynamicMapperValue.get();
-            if(status<0){ // You switched it off
-                return unknownRuntimeResponse(exception);
-            }
+        Optional<Integer> possibleDynamicMapperValue = config.getOptionalValue(configkey,Integer.class);
+        if(possibleDynamicMapperValue.isPresent()){
+            int status = possibleDynamicMapperValue.get();
+            // You switched it off
+            if(status<0)return unknownRuntimeResponse(exception);
             String reason = getReason(exception);
             log.log(Level.FINEST, reason, exception);
             return Response.status(status).header(REASON, reason).build();

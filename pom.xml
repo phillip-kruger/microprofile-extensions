@@ -168,6 +168,5 @@
         <module>beanval-ext</module>
         <module>restclient-ext</module>
         <module>jwt-user-ext</module>
-        <module>jwt-issuer-ext</module>
     </modules>
 </project>
