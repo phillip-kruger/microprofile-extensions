@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
-import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;

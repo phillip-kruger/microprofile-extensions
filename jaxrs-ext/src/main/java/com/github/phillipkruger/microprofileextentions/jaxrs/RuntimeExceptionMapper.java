@@ -39,21 +39,30 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
     @Override
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response toResponse(RuntimeException exception) {
+        return handleThrowable(exception);
+    }
+    
+    private Response handleThrowable(Throwable exception) {
+        if(exception instanceof WebApplicationException) {
+            return ((WebApplicationException) exception).getResponse();
+        }
         
         String configkey = exception.getClass().getName() + STATUS_CODE_KEY;
         Optional<Integer> possibleDynamicMapperValue = config.getOptionalValue(configkey,Integer.class);
         if(possibleDynamicMapperValue.isPresent()){
             int status = possibleDynamicMapperValue.get();
             // You switched it off
-            if(status<0)return unknownRuntimeResponse(exception);
+            if(status<0)return handleNotMapped(exception);
             String reason = getReason(exception);
             log.log(Level.FINEST, reason, exception);
             return Response.status(status).header(REASON, reason).build();
+        } else if(exception.getCause()!=null && exception.getCause()!=null && providers!=null){
+            final Throwable cause = exception.getCause();
+            return handleThrowable(cause);
         } else {
-            return unknownRuntimeResponse(exception);
+            return handleNotMapped(exception);
         }
     }
-    
     
     private String getReason(Throwable exception){
         String reason = exception.getMessage();
@@ -69,20 +78,7 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
         return reason;
     }
     
-    private Response unknownRuntimeResponse(RuntimeException exception) {
-        final Throwable cause = exception.getCause();
-        if (cause != null && providers!=null) {
-            final ExceptionMapper mapper = providers.getExceptionMapper(cause.getClass());
-            if (mapper != null) {
-                return mapper.toResponse(cause);
-            } else if (cause instanceof WebApplicationException) {
-                return ((WebApplicationException) cause).getResponse();
-            }
-        }
-        return noMapResponse(exception);
-    }
-    
-    private Response noMapResponse(final Throwable exception){
+    private Response handleNotMapped(final Throwable exception){
         log.log(Level.SEVERE, "Unmapped Runtime Exception", exception);
         
         List<String> reasons = getReasons(exception, new ArrayList<>());
