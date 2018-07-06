@@ -25,6 +25,7 @@ public class RuntimeResponseExceptionMapper implements ResponseExceptionMapper<R
     
     @PostConstruct
     public void init(){
+        
         Iterable<String> propertyNames = config.getPropertyNames();
         for(String property : propertyNames){
             if(property.endsWith(PROPERTY_KEY_END)){
