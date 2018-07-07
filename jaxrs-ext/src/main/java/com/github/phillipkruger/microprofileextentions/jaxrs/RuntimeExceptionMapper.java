@@ -75,7 +75,7 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
                 return "Unknown [" + exception.getClass().getName() + "] exception";
             }
         }
-        return reason;
+        return "[" + exception.getClass().getName() + "] " + reason;
     }
     
     private Response handleNotMapped(final Throwable exception){
