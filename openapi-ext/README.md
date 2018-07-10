@@ -1,6 +1,6 @@
 # OpenAPI Extentions
 
-This adds Swagger UI to MicroProfile Open API.
+This adds [Swagger UI](https://swagger.io/tools/swagger-ui/) to MicroProfile Open API.
 
 ## Usage
 
@@ -15,16 +15,16 @@ This adds Swagger UI to MicroProfile Open API.
 
 You can change some values using MicroProfile config API:
 
-* openapi-ui.copyrightBy - Adds a name to the copyright in the footer. Default to none.
-* openapi-ui.copyrightYear - Adds the copyright year. Default to current year.
-* openapi-ui.title - Adds the title in the window. Default to "MicroProfile - Open API".
-* openapi-ui.serverInfo - Adds info on the server. Default to the system server info.
-* openapi-ui.contextRoot - Adds the context root. Default to the current value.
-* openapi-ui.swaggerUiTheme - Use a theme from [swagger-ui-themes](http://meostrander.com/swagger-ui-themes/). Default to "flattop".
-* openapi-ui.swaggerHeaderVisibility - Show/hide the swagger logo header. Default to "visible".
-* openapi-ui.exploreFormVisibility - Show/hide the explore form. Default to "hidden".
-* openapi-ui.serverVisibility - Show/hide the server selection. Default to "hidden".
-* openapi-ui.createdWithVisibility- Show/hide the created with footer. Default to "visible".
+* **openapi-ui.copyrightBy** - Adds a name to the copyright in the footer. Default to none.
+* **openapi-ui.copyrightYear** - Adds the copyright year. Default to current year.
+* **openapi-ui.title** - Adds the title in the window. Default to "MicroProfile - Open API".
+* **openapi-ui.serverInfo** - Adds info on the server. Default to the system server info.
+* **openapi-ui.contextRoot** - Adds the context root. Default to the current value.
+* **openapi-ui.swaggerUiTheme** - Use a theme from [swagger-ui-themes](http://meostrander.com/swagger-ui-themes/). Default to "flattop".
+* **openapi-ui.swaggerHeaderVisibility** - Show/hide the swagger logo header. Default to "visible".
+* **openapi-ui.exploreFormVisibility** - Show/hide the explore form. Default to "hidden".
+* **openapi-ui.serverVisibility** - Show/hide the server selection. Default to "hidden".
+* **openapi-ui.createdWithVisibility** - Show/hide the created with footer. Default to "visible".
 
 #### Screenshot
 

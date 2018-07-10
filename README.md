@@ -21,5 +21,5 @@ Tested with
 ## List of Extentions
 
 * [Config Ext](https://github.com/phillip-kruger/microprofile-extentions/tree/master/config-ext)
-* [Health Ext](health-ext/)
-* [OpenApi Ext](/phillip-kruger/microprofile-extentions/tree/master/openapi-ext/)
+* [Health Ext](https://github.com/phillip-kruger/microprofile-extentions/tree/master/health-ext)
+* [OpenApi Ext](https://github.com/phillip-kruger/microprofile-extentions/tree/master/openapi-ext)
