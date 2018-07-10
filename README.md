@@ -20,6 +20,6 @@ Tested with
 
 ## List of Extentions
 
-* [Config Ext](/tree/master/config-ext/)
-* [Health Ext](/tree/master/health-ext/)
-* [OpenApi Ext](/tree/master/openapi-ext/)
+* [Config Ext](/phillip-kruger/microprofile-extentions/tree/master/config-ext/)
+* [Health Ext](tree/master/health-ext/)
+* [OpenApi Ext](/phillip-kruger/microprofile-extentions/tree/master/openapi-ext/)
