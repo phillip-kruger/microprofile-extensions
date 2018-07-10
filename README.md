@@ -20,7 +20,7 @@ Tested with
 
 ## List of Extentions
 
-* [Config Ext](/config-ext/README.md)
+* [Config Ext](/tree/master/config-ext/README.md)
 
 
 ## Health API Extentions

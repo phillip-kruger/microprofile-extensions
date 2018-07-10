@@ -1,6 +1,6 @@
 # Config API Extentions
 
-This extention gives you some extra configuration source and some extra converters.
+This extention gives you some extra configuration sources and some extra converters.
 
 ## Usage
 
@@ -27,6 +27,8 @@ You can do this by using the REST API to change the config values:
     GET /config/key/{key} - get the configured value for {key}
     PUT /config/key/{key} - set the value for {key}
     DELETE /config/key/{key} - delete the configured value for {key}
+
+![REST API](https://raw.githubusercontent.com/phillip-kruger/microprofile-extentions/master/config-ext/memory_config_api.png)
 
 ## Config converters 
 
