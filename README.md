@@ -23,3 +23,4 @@ Tested with
 * [Config Ext](https://github.com/phillip-kruger/microprofile-extentions/tree/master/config-ext)
 * [Health Ext](https://github.com/phillip-kruger/microprofile-extentions/tree/master/health-ext)
 * [OpenApi Ext](https://github.com/phillip-kruger/microprofile-extentions/tree/master/openapi-ext)
+* [REST Client Ext](https://github.com/phillip-kruger/microprofile-extentions/tree/master/restclient-ext)

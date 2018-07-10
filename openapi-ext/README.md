@@ -11,7 +11,7 @@ This adds [Swagger UI](https://swagger.io/tools/swagger-ui/) to MicroProfile Ope
     </dependency>
 
 * example: http://localhost:8080/example/api/openapi-ui/
-* */your_context_root/your_application_path*/openapi-ui/
+* so: *your_scheme://your_domain:your_port/your_context_root/your_application_path*/openapi-ui/
 
 You can change some values using MicroProfile config API:
 
