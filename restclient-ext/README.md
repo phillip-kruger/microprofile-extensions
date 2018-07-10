@@ -1,6 +1,6 @@
 # REST Client Extentions
 
-This allows you to use the Config API to map HTTP Response code to RuntimeExceptions.
+This allows you to use the Config API to map HTTP Response codes to Runtime Exceptions.
 
 ## Usage
 
