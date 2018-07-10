@@ -26,6 +26,10 @@ You can change some values using MicroProfile config API:
 * **openapi-ui.serverVisibility** - Show/hide the server selection. Default to "hidden".
 * **openapi-ui.createdWithVisibility** - Show/hide the created with footer. Default to "visible".
 
+#### Icon
+
+To change the default MicroProfile icon, include a file named ```openapi.png``` in ```/src/main/resources/```
+
 #### Screenshot
 
 ![screenshot](https://raw.githubusercontent.com/phillip-kruger/microprofile-extentions/master/openapi-ext/screenshot.png)
