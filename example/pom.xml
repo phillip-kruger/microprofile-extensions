@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.phillip-kruger</groupId>
+        <artifactId>microprofile-extentions</artifactId>
+        <version>1.0.7-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+    
+    <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
+    <artifactId>example</artifactId>
+    <packaging>war</packaging>
+    
+    <name>Microprofile extentions :: Example</name>
+    <description>Sample application that uses some of these extentions</description>
+    
+    <properties>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <payara-micro.version>5.182</payara-micro.version>
+    </properties>
+    
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>config-ext</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        
+        <plugins>
+            
+
+            <plugin>
+                <groupId>fish.payara.maven.plugins</groupId>
+                <artifactId>payara-micro-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <artifactItem>
+                        <groupId>fish.payara.extras</groupId>
+                        <artifactId>payara-micro</artifactId>
+                        <version>${payara-micro.version}</version>
+                    </artifactItem>
+                    <deployWar>true</deployWar>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </build>
+</project>

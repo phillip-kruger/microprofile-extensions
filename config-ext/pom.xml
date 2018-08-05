@@ -14,4 +14,12 @@
     
     <name>Microprofile extentions :: Config</name>
     <description>Some default config providers and converters</description>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.coreos</groupId>
+            <artifactId>jetcd-core</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+    </dependencies>
 </project>
