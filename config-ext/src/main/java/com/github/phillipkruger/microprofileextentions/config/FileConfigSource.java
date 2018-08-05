@@ -22,14 +22,9 @@ public class FileConfigSource implements ConfigSource {
     private static final Map<String,String> PROPERTIES = new HashMap<>();
     
     public FileConfigSource(){
-        String filename;
-        String path = System.getProperty(PATH_PROPERTY);
-        if(path==null || path.isEmpty()){
-            filename = DEFAULT_NAME;
-        }else{
-            filename = path;
-        }
-        
+        log.info("Loading [file] MicroProfile ConfigSource");
+        String filename = getPropertyValue(KEY_FILE_PATH,DEFAULT_FILE_PATH);
+        log.log(Level.INFO, "Using [{0}] as property file", filename);
         File f = new File(filename);
         
         try {
@@ -69,8 +64,14 @@ public class FileConfigSource implements ConfigSource {
         return NAME;
     }
     
-    private static final String PATH_PROPERTY = "applicationPropertiesPath";
-    private static final String DEFAULT_NAME = "application.properties";
-                                                
+    // TODO: Would love to actually just use Config API...
+    private String getPropertyValue(String key,String defaultValue){
+        String val = System.getProperty(key, System.getenv(key));
+        if(val!=null && !val.isEmpty())return val;
+        return defaultValue;
+    }
+    
+    private static final String KEY_FILE_PATH = "configsource.file.path";
+    private static final String DEFAULT_FILE_PATH = "application.properties";
     
 }

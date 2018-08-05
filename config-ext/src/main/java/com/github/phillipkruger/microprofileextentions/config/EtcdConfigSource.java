@@ -25,8 +25,15 @@ public class EtcdConfigSource implements ConfigSource {
     private Client client;
     
     public EtcdConfigSource(){
-        log.info("Loading etcd MicroProfile ConfigSource");
-        connectToEtcdServer();
+        log.info("Loading [etcd] MicroProfile ConfigSource");
+        
+        String scheme = getPropertyValue(KEY_SCHEME,DEFAULT_SCHEME);
+        String host = getPropertyValue(KEY_HOST,DEFAULT_HOST);
+        String port = getPropertyValue(KEY_PORT,DEFAULT_PORT);
+
+        String endpoint = String.format("%s://%s:%s",scheme,host,port);
+        log.log(Level.INFO, "Using [{0}] as etcd server endpoint", endpoint);
+        this.client = Client.builder().endpoints(endpoint).build();
     }
     
     @Override
@@ -88,15 +95,6 @@ public class EtcdConfigSource implements ConfigSource {
         return defaultValue;
     }
     
-    private void connectToEtcdServer(){
-        String scheme = getPropertyValue(KEY_SCHEME,DEFAULT_SCHEME);
-        String host = getPropertyValue(KEY_HOST,DEFAULT_HOST);
-        String port = getPropertyValue(KEY_PORT,DEFAULT_PORT);
-
-        String endpoint = String.format("%s://%s:%s",scheme,host,port);
-        log.log(Level.INFO, "Using [{0}] as etcd server endpoint", endpoint);
-        this.client = Client.builder().endpoints(endpoint).build();
-    }
     
     private static final String KEY_SCHEME = "configsource.etcd.scheme";
     private static final String DEFAULT_SCHEME = "http";

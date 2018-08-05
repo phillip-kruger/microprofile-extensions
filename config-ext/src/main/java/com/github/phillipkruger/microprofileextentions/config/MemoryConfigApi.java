@@ -28,7 +28,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
  * @author Phillip Kruger (phillip.kruger@phillip-kruger.com)
  */
 @Log
-@Path("/config")
+@Path("/memoryconfig")
 @Tag(name = "MicroProfile Memory Config", description = "In-memory config source for MicroProfile")
 public class MemoryConfigApi {
  
