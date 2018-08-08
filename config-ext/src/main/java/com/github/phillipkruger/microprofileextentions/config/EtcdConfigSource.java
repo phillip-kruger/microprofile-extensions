@@ -46,7 +46,7 @@ public class EtcdConfigSource implements ConfigSource {
                 m.put(key, value);
             }
         } catch (InterruptedException | ExecutionException ex) {
-            log.log(Level.WARNING, "Can not get all config keys and values from etcd Config source: {1}", new Object[]{ex.getMessage()});
+            log.log(Level.FINEST, "Can not get all config keys and values from etcd Config source: {1}", new Object[]{ex.getMessage()});
         }
         
         return m;
@@ -61,7 +61,7 @@ public class EtcdConfigSource implements ConfigSource {
             String value = toString(response);
             return value;
         } catch (InterruptedException | ExecutionException ex) {
-            log.log(Level.WARNING, "Can not get config value for [{0}] from etcd Config source: {1}", new Object[]{key, ex.getMessage()});
+            log.log(Level.FINEST, "Can not get config value for [{0}] from etcd Config source: {1}", new Object[]{key, ex.getMessage()});
         }
         
         return null;
