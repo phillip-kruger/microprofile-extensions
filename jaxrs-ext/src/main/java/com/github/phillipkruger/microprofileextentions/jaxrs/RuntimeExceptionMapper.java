@@ -46,22 +46,24 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
         if(exception instanceof WebApplicationException) {
             return ((WebApplicationException) exception).getResponse();
         }
-        
-        String configkey = exception.getClass().getName() + STATUS_CODE_KEY;
-        Optional<Integer> possibleDynamicMapperValue = config.getOptionalValue(configkey,Integer.class);
-        if(possibleDynamicMapperValue.isPresent()){
-            int status = possibleDynamicMapperValue.get();
-            // You switched it off
-            if(status<0)return handleNotMapped(exception);
-            String reason = getReason(exception);
-            log.log(Level.FINEST, reason, exception);
-            return Response.status(status).header(REASON, reason).build();
-        } else if(exception.getCause()!=null && exception.getCause()!=null && providers!=null){
-            final Throwable cause = exception.getCause();
-            return handleThrowable(cause);
-        } else {
-            return handleNotMapped(exception);
+        if(exception!=null){
+            String configkey = exception.getClass().getName() + STATUS_CODE_KEY;
+            Optional<Integer> possibleDynamicMapperValue = config.getOptionalValue(configkey,Integer.class);
+            if(possibleDynamicMapperValue.isPresent()){
+                int status = possibleDynamicMapperValue.get();
+                // You switched it off
+                if(status<0)return handleNotMapped(exception);
+                String reason = getReason(exception);
+                log.log(Level.FINEST, reason, exception);
+                return Response.status(status).header(REASON, reason).build();
+            } else if(exception.getCause()!=null && exception.getCause()!=null && providers!=null){
+                final Throwable cause = exception.getCause();
+                return handleThrowable(cause);
+            } else {
+                return handleNotMapped(exception);
+            }
         }
+        return handleNullException();
     }
     
     private String getReason(Throwable exception){
@@ -88,6 +90,12 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
             builder = builder.header(REASON, reason);
         }
         
+        return builder.build();
+    }
+    
+    private Response handleNullException(){
+        log.log(Level.SEVERE, "Runtime Exception that is null");
+        Response.ResponseBuilder builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
         return builder.build();
     }
     

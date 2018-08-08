@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
+import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
 /**
@@ -18,34 +21,21 @@ import org.eclipse.microprofile.config.spi.ConfigSource;
  * @author Phillip Kruger (phillip.kruger@phillip-kruger.com)
  */
 @Log
+@NoArgsConstructor
 public class EtcdConfigSource implements ConfigSource {
     
-    public static final String NAME = "EtdcConfigSource";
-    
-    private Client client;
-    
-    public EtcdConfigSource(){
-        log.info("Loading [etcd] MicroProfile ConfigSource");
-        
-        String scheme = getPropertyValue(KEY_SCHEME,DEFAULT_SCHEME);
-        String host = getPropertyValue(KEY_HOST,DEFAULT_HOST);
-        String port = getPropertyValue(KEY_PORT,DEFAULT_PORT);
-
-        String endpoint = String.format("%s://%s:%s",scheme,host,port);
-        log.log(Level.INFO, "Using [{0}] as etcd server endpoint", endpoint);
-        this.client = Client.builder().endpoints(endpoint).build();
-    }
+    public static final String NAME = "EtcdConfigSource";
     
     @Override
     public int getOrdinal() {
-        return 450;
+        return 320;
     }
     
     @Override
     public Map<String, String> getProperties() {
         Map<String,String> m = new HashMap<>();
         ByteSequence bsKey = ByteSequence.fromString("");
-        CompletableFuture<GetResponse> getFuture = client.getKVClient().get(bsKey);
+        CompletableFuture<GetResponse> getFuture = getClient().getKVClient().get(bsKey);
         try {
             GetResponse response = getFuture.get();
             List<KeyValue> kvs = response.getKvs();
@@ -65,10 +55,11 @@ public class EtcdConfigSource implements ConfigSource {
     @Override
     public String getValue(String key) {
         ByteSequence bsKey = ByteSequence.fromString(key);
-        CompletableFuture<GetResponse> getFuture = client.getKVClient().get(bsKey);
+        CompletableFuture<GetResponse> getFuture = getClient().getKVClient().get(bsKey);
         try {
             GetResponse response = getFuture.get();
-            return toString(response);
+            String value = toString(response);
+            return value;
         } catch (InterruptedException | ExecutionException ex) {
             log.log(Level.WARNING, "Can not get config value for [{0}] from etcd Config source: {1}", new Object[]{key, ex.getMessage()});
         }
@@ -88,13 +79,35 @@ public class EtcdConfigSource implements ConfigSource {
         return null;
     }
     
-    // TODO: Would love to actually just use Config API...
-    private String getPropertyValue(String key,String defaultValue){
-        String val = System.getProperty(key, System.getenv(key));
-        if(val!=null && !val.isEmpty())return val;
-        return defaultValue;
+    private Client client = null;
+    private Client getClient(){
+        if(this.client == null){
+            log.info("Loading [etcd] MicroProfile ConfigSource");
+        
+            String scheme = getPropertyValue(KEY_SCHEME,DEFAULT_SCHEME);
+            String host = getPropertyValue(KEY_HOST,DEFAULT_HOST);
+            String port = getPropertyValue(KEY_PORT,DEFAULT_PORT);
+            
+            String endpoint = String.format("%s://%s:%s",scheme,host,port);
+            log.log(Level.INFO, "Using [{0}] as etcd server endpoint", endpoint);
+            this.client = Client.builder().endpoints(endpoint).build();
+        }
+        return this.client;
     }
     
+    
+    private String getPropertyValue(String key,String defaultValue){
+        Config config = ConfigProvider.getConfig();
+        Iterable<ConfigSource> configSources = config.getConfigSources();
+        for(ConfigSource configsource:configSources){
+            if(!configsource.getName().equals(NAME)){
+                String val = configsource.getValue(key);
+                if(val!=null && !val.isEmpty())return val;
+            }
+        }
+        return defaultValue;
+        
+    }
     
     private static final String KEY_SCHEME = "configsource.etcd.scheme";
     private static final String DEFAULT_SCHEME = "http";

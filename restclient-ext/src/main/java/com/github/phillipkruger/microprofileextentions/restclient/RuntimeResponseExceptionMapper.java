@@ -21,7 +21,7 @@ public class RuntimeResponseExceptionMapper implements ResponseExceptionMapper<R
     @Inject
     private Config config;
     
-    private List<Integer> codes = new ArrayList<>();
+    private final List<Integer> codes = new ArrayList<>();
     
     @PostConstruct
     public void init(){

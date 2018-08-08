@@ -92,7 +92,7 @@ public class Templates {
                 }
             }
         }catch(UnsupportedOperationException uoe){
-            log.warning("Can not replace dynamic properties in the Open API Swagger template. " + uoe.getMessage());
+            log.log(Level.WARNING, "Can not replace dynamic properties in the Open API Swagger template. {0}", uoe.getMessage());
         }
         // Then properties with defaults.
         html = html.replaceAll(VAR_COPYRIGHT_BY, copyrightBy);
@@ -147,12 +147,15 @@ public class Templates {
     private String getCss() {
         String rawcss;
         
-        if(whiteLabel.hasCss())rawcss = whiteLabel.getCss();
+        if(whiteLabel.hasCss()){
+            rawcss = whiteLabel.getCss();
+        }else {
         
-        try(InputStream css = this.getClass().getClassLoader().getResourceAsStream(FILE_STYLE)){
-            rawcss = toString(css);    
-        } catch (IOException ex) {
-            return EMPTY;
+            try(InputStream css = this.getClass().getClassLoader().getResourceAsStream(FILE_STYLE)){
+                rawcss = toString(css);    
+            } catch (IOException ex) {
+                return EMPTY;
+            }
         }
         
         rawcss = rawcss.replaceAll(VAR_SWAGGER_HEADER_VISIBILITY, swaggerHeaderVisibility);
@@ -281,5 +284,4 @@ public class Templates {
     private static final String FILE_STYLE = "META-INF/resources/templates/style.css";
     private static final String KEY_IDENTIFIER = "openapi-ui.";
 
-    
 }

@@ -15,6 +15,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.opentracing.Traced;
 
 /**
  * Example Service. JAX-RS
@@ -29,15 +30,24 @@ public class ConfigRetrievalService {
     @Inject
     private Config config;
     
+    //@Inject
+    //io.opentracing.Tracer configuredTracer;
+    
+    @Traced(operationName = "GetConfigValue")
     @GET @Path("/{key}")
     @Operation(description = "Get the value for this key")
     @APIResponses({
-        @APIResponse(responseCode = "200", description = "Successfull, returning foo")
+        @APIResponse(responseCode = "200", description = "Successfull, returning the value")
     })
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getValue(@PathParam("key") String key) {
+    public Response getConfigValue(@PathParam("key") String key) {
         String value = config.getValue(key, String.class);
         log.log(Level.INFO, "{0} = {1}", new Object[]{key, value});
+        
+        //log.severe(">>>>>>>>>>>>>>>> " + configuredTracer.getClass().getName());
+        
+        
+        
         return Response.ok(value).build();
     }
     

@@ -2,7 +2,6 @@ package com.github.phillipkruger.microprofileextentions.config;
 
 import java.util.HashMap;
 import java.util.Map;
-import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
@@ -11,15 +10,18 @@ import org.eclipse.microprofile.config.spi.ConfigSource;
  * @author Phillip Kruger (phillip.kruger@phillip-kruger.com)
  */
 @Log
-@NoArgsConstructor
 public class MemoryConfigSource implements ConfigSource {
     
     public static final String NAME = "MemoryConfigSource";
     private static final Map<String,String> PROPERTIES = new HashMap<>();
     
+    public MemoryConfigSource(){
+        log.info("Loading [memory] MicroProfile ConfigSource");
+    }
+    
     @Override
     public int getOrdinal() {
-        return 500;
+        return 900;
     }
     
     @Override

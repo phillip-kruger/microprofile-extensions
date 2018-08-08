@@ -1,0 +1,2 @@
+set-requesttracing-configuration --thresholdValue=25 --enabled=true --target=server-config --thresholdUnit=MICROSECONDS --dynamic=true
+notification-cdieventbus-configure --loopBack=true --dynamic=true --enabled=true --hazelcastEnabled=false

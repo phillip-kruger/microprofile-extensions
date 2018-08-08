@@ -27,6 +27,36 @@
             <artifactId>config-ext</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>openapi-ext</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        
+        
+
+        <dependency>
+            <groupId>fish.payara.api</groupId>
+            <artifactId>payara-api</artifactId>
+            <version>${payara-micro.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opentracing</groupId>
+            <artifactId>opentracing-api</artifactId>
+            <version>0.31.0</version>
+            <!--<scope>provided</scope>-->
+        </dependency>
+
+        <dependency>
+            <groupId>io.jaegertracing</groupId>
+            <artifactId>jaeger-client</artifactId>
+            <version>0.30.3</version>
+        </dependency>
+
     </dependencies>
     
     <build>
@@ -34,7 +64,6 @@
         
         <plugins>
             
-
             <plugin>
                 <groupId>fish.payara.maven.plugins</groupId>
                 <artifactId>payara-micro-maven-plugin</artifactId>
@@ -54,10 +83,27 @@
                         <version>${payara-micro.version}</version>
                     </artifactItem>
                     <deployWar>true</deployWar>
+                    <commandLineOptions>
+                        <option>
+                            <key>--postbootcommandfile</key>
+                            <value>${project.build.directory}/postbootcommand.txt</value>
+                        </option>
+                    </commandLineOptions>
                 </configuration>
             </plugin>
 
 
         </plugins>
+        
+        <resources>  
+            <resource>
+                <filtering>true</filtering>
+                <directory>${project.basedir}</directory>
+                <targetPath>${project.build.directory}</targetPath>
+                <includes>
+                   <include>postbootcommand.txt</include>
+                </includes>
+             </resource> 
+        </resources>
     </build>
 </project>

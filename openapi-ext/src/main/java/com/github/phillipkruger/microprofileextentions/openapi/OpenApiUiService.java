@@ -16,7 +16,7 @@ import lombok.extern.java.Log;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 /**
- * This service creates a html document for swagger ui
+ * This service creates a HTML document for Swagger UI
  * @author Phillip Kruger (phillip.kruger@phillip-kruger.com)
  */
 @Log
