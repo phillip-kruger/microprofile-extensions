@@ -80,11 +80,11 @@
                         <version>${payara-micro.version}</version>
                     </artifactItem>
                     <deployWar>true</deployWar>
-<!--                    <javaCommandLineOptions>
+                    <javaCommandLineOptions>
                         <option>
-                            <value>-Dfoo=from_system</value>
+                            <value>-Dconfigsource.etcd.host=127.0.0.1</value>
                         </option>
-                    </javaCommandLineOptions>-->
+                    </javaCommandLineOptions>
                     <commandLineOptions>
                         <option>
                             <key>--postbootcommandfile</key>
