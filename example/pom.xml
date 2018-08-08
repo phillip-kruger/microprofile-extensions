@@ -34,9 +34,6 @@
             <version>${project.version}</version>
         </dependency>
         
-        
-        
-
         <dependency>
             <groupId>fish.payara.api</groupId>
             <artifactId>payara-api</artifactId>
@@ -83,6 +80,11 @@
                         <version>${payara-micro.version}</version>
                     </artifactItem>
                     <deployWar>true</deployWar>
+<!--                    <javaCommandLineOptions>
+                        <option>
+                            <value>-Dfoo=from_system</value>
+                        </option>
+                    </javaCommandLineOptions>-->
                     <commandLineOptions>
                         <option>
                             <key>--postbootcommandfile</key>
