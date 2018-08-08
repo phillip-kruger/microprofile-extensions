@@ -7,7 +7,7 @@ This extention gives you some extra configuration sources and some extra convert
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
         <artifactId>config-ext</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
     </dependency>
 
 ## Config sources
@@ -29,6 +29,14 @@ You can do this by using the REST API to change the config values:
     DELETE /config/key/{key} - delete the configured value for {key}
 
 ![REST API](https://raw.githubusercontent.com/phillip-kruger/microprofile-extentions/master/config-ext/memory_config_api.png)
+
+### Etcd config
+
+Use [etcd](https://coreos.com/etcd/) to get config values. You can define the server details of the etcd server using MicroProfile Config:
+
+    configsource.etcd.scheme=http
+    configsource.etcd.host=localhost
+    configsource.etcd.port2379
 
 ## Config converters 
 

@@ -7,7 +7,7 @@ This adds [Swagger UI](https://swagger.io/tools/swagger-ui/) to MicroProfile Ope
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
         <artifactId>openapi-ext</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
     </dependency>
 
 * example: http://localhost:8080/example/api/openapi-ui/

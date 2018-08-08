@@ -7,7 +7,7 @@ This extention gives you some default health endpoints that can be configured us
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
         <artifactId>health-ext</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
     </dependency>
 
 Go to /health to see all default providers
