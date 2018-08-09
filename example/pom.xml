@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.github.phillip-kruger</groupId>
         <artifactId>microprofile-extentions</artifactId>
-        <version>1.0.8-SNAPSHOT</version>
+        <version>1.0.7</version>
         <relativePath>../</relativePath>
     </parent>
     
@@ -58,54 +58,71 @@
     
     <build>
         <finalName>${project.artifactId}</finalName>
-        
-        <plugins>
-            
-            <plugin>
-                <groupId>fish.payara.maven.plugins</groupId>
-                <artifactId>payara-micro-maven-plugin</artifactId>
-                <version>1.0.1</version>
-                <executions>
-                    <execution>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <artifactItem>
-                        <groupId>fish.payara.extras</groupId>
-                        <artifactId>payara-micro</artifactId>
-                        <version>${payara-micro.version}</version>
-                    </artifactItem>
-                    <deployWar>true</deployWar>
-                    <javaCommandLineOptions>
-                        <option>
-                            <value>-Dconfigsource.etcd.host=127.0.0.1</value>
-                        </option>
-                    </javaCommandLineOptions>
-                    <commandLineOptions>
-                        <option>
-                            <key>--postbootcommandfile</key>
-                            <value>${project.build.directory}/postbootcommand.txt</value>
-                        </option>
-                    </commandLineOptions>
-                </configuration>
-            </plugin>
-
-
-        </plugins>
-        
-        <resources>  
-            <resource>
-                <filtering>true</filtering>
-                <directory>${project.basedir}</directory>
-                <targetPath>${project.build.directory}</targetPath>
-                <includes>
-                   <include>postbootcommand.txt</include>
-                </includes>
-             </resource> 
-        </resources>
     </build>
+    
+    <profiles>
+        
+        <profile>
+            <id>payara-micro-run</id>
+            <activation>
+                <property>
+                    <name>payara-micro-run</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>fish.payara.maven.plugins</groupId>
+                        <artifactId>payara-micro-maven-plugin</artifactId>
+                        <version>1.0.1</version>
+                        <executions>
+                            <execution>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <artifactItem>
+                                <groupId>fish.payara.extras</groupId>
+                                <artifactId>payara-micro</artifactId>
+                                <version>${payara-micro.version}</version>
+                            </artifactItem>
+                            <deployWar>true</deployWar>
+                            <javaCommandLineOptions>
+                                <option>
+                                    <value>-Dconfigsource.etcd.host=127.0.0.1</value>
+                                </option>
+                            </javaCommandLineOptions>
+                            <commandLineOptions>
+                                <option>
+                                    <key>--postbootcommandfile</key>
+                                    <value>${project.build.directory}/postbootcommand.txt</value>
+                                </option>
+                            </commandLineOptions>
+                        </configuration>
+                    </plugin>
+
+
+                </plugins>
+                
+                <resources>  
+                    <resource>
+                        <filtering>true</filtering>
+                        <directory>${project.basedir}</directory>
+                        <targetPath>${project.build.directory}</targetPath>
+                        <includes>
+                           <include>postbootcommand.txt</include>
+                        </includes>
+                     </resource> 
+                </resources>
+            </build>
+            
+            
+        </profile>
+        
+        
+    </profiles>
 </project>
