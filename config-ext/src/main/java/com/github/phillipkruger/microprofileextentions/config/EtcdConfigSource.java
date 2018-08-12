@@ -25,7 +25,20 @@ import org.eclipse.microprofile.config.spi.ConfigSource;
 public class EtcdConfigSource implements ConfigSource {
     
     public static final String NAME = "EtcdConfigSource";
-    
+
+    private static final String KEY_PREFIX = "configsource.etcd.";
+
+    private static final String KEY_SCHEME = KEY_PREFIX + "scheme";
+    private static final String DEFAULT_SCHEME = "http";
+
+    private static final String KEY_HOST = KEY_PREFIX + "host";
+    private static final String DEFAULT_HOST = "localhost";
+
+    private static final String KEY_PORT = KEY_PREFIX + "port";
+    private static final String DEFAULT_PORT = "2379";
+
+    private Client client = null;
+
     @Override
     public int getOrdinal() {
         return 320;
@@ -35,6 +48,7 @@ public class EtcdConfigSource implements ConfigSource {
     public Map<String, String> getProperties() {
         Map<String,String> m = new HashMap<>();
         ByteSequence bsKey = ByteSequence.fromString("");
+
         CompletableFuture<GetResponse> getFuture = getClient().getKVClient().get(bsKey);
         try {
             GetResponse response = getFuture.get();
@@ -54,6 +68,11 @@ public class EtcdConfigSource implements ConfigSource {
 
     @Override
     public String getValue(String key) {
+        if (client == null && key.startsWith(KEY_PREFIX)) {
+            // in case we are about to configure ourselves we simply ignore that key
+            return null;
+        }
+
         ByteSequence bsKey = ByteSequence.fromString(key);
         CompletableFuture<GetResponse> getFuture = getClient().getKVClient().get(bsKey);
         try {
@@ -79,14 +98,14 @@ public class EtcdConfigSource implements ConfigSource {
         return null;
     }
     
-    private Client client = null;
     private Client getClient(){
-        if(this.client == null){
+        if(this.client == null ){
             log.info("Loading [etcd] MicroProfile ConfigSource");
-        
-            String scheme = getPropertyValue(KEY_SCHEME,DEFAULT_SCHEME);
-            String host = getPropertyValue(KEY_HOST,DEFAULT_HOST);
-            String port = getPropertyValue(KEY_PORT,DEFAULT_PORT);
+
+            Config cfg = ConfigProvider.getConfig();
+            String scheme = cfg.getOptionalValue(KEY_SCHEME, String.class).orElse(DEFAULT_SCHEME);
+            String host = cfg.getOptionalValue(KEY_HOST, String.class).orElse(DEFAULT_HOST);
+            String port = cfg.getOptionalValue(KEY_PORT, String.class).orElse(DEFAULT_PORT);
             
             String endpoint = String.format("%s://%s:%s",scheme,host,port);
             log.log(Level.INFO, "Using [{0}] as etcd server endpoint", endpoint);
@@ -95,27 +114,5 @@ public class EtcdConfigSource implements ConfigSource {
         return this.client;
     }
     
-    
-    private String getPropertyValue(String key,String defaultValue){
-        Config config = ConfigProvider.getConfig();
-        Iterable<ConfigSource> configSources = config.getConfigSources();
-        for(ConfigSource configsource:configSources){
-            if(!configsource.getName().equals(NAME)){
-                String val = configsource.getValue(key);
-                if(val!=null && !val.isEmpty())return val;
-            }
-        }
-        return defaultValue;
-        
-    }
-    
-    private static final String KEY_SCHEME = "configsource.etcd.scheme";
-    private static final String DEFAULT_SCHEME = "http";
-    
-    private static final String KEY_HOST = "configsource.etcd.host";
-    private static final String DEFAULT_HOST = "localhost";
-    
-    private static final String KEY_PORT = "configsource.etcd.port";
-    private static final String DEFAULT_PORT = "2379";
-    
+
 }
