@@ -3,16 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.phillip-kruger</groupId>
-        <artifactId>microprofile-extentions</artifactId>
+        <artifactId>microprofile-extensions</artifactId>
         <version>1.0.9-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
-    <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
+    <groupId>com.github.phillip-kruger.microprofile-extensions</groupId>
     <artifactId>jwt-user-ext</artifactId>
     <packaging>jar</packaging>
     
-    <name>Microprofile extentions :: JWT User</name>
+    <name>Microprofile extensions :: JWT User</name>
     <description>Some user utils for JWT</description>
     
     <dependencies>

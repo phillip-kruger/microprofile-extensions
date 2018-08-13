@@ -1,13 +1,13 @@
-# OpenAPI Extentions
+# OpenAPI extensions
 
 This adds [Swagger UI](https://swagger.io/tools/swagger-ui/) to MicroProfile Open API.
 
 ## Usage
 
     <dependency>
-        <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
+        <groupId>com.github.phillip-kruger.microprofile-extensions</groupId>
         <artifactId>openapi-ext</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </dependency>
 
 * example: http://localhost:8080/example/api/openapi-ui/
@@ -32,4 +32,4 @@ To change the default MicroProfile icon, include a file named ```openapi.png``` 
 
 #### Screenshot
 
-![screenshot](https://raw.githubusercontent.com/phillip-kruger/microprofile-extentions/master/openapi-ext/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/phillip-kruger/microprofile-extensions/master/openapi-ext/screenshot.png)

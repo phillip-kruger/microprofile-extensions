@@ -3,17 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.phillip-kruger</groupId>
-        <artifactId>microprofile-extentions</artifactId>
+        <artifactId>microprofile-extensions</artifactId>
         <version>1.0.9-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
-    <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
+    <groupId>com.github.phillip-kruger.microprofile-extensions</groupId>
     <artifactId>example</artifactId>
     <packaging>war</packaging>
     
-    <name>Microprofile extentions :: Example</name>
-    <description>Sample application that uses some of these extentions</description>
+    <name>Microprofile extensions :: Example</name>
+    <description>Sample application that uses some of these extensions</description>
     
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>

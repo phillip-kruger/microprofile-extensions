@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>com.github.phillip-kruger</groupId>
-    <artifactId>microprofile-extentions</artifactId>
+    <artifactId>microprofile-extensions</artifactId>
     <version>1.0.9-SNAPSHOT</version>
     <packaging>pom</packaging>
     
-    <name>Microprofile extentions</name>
-    <url>https://github.com/phillip-kruger/microprofile-extentions</url>
-    <description>Some general extentions for Java EE Miroprofile projects</description>
+    <name>Microprofile extensions</name>
+    <url>https://github.com/phillip-kruger/microprofile-extensions</url>
+    <description>Some general extensions for Java EE Miroprofile projects</description>
     
     <licenses>
         <license>
@@ -20,14 +20,14 @@
     </licenses>
     
     <scm>
-        <connection>scm:git:https://github.com/phillip-kruger/microprofile-extentions.git</connection>
-        <url>https://github.com/phillip-kruger/microprofile-extentions</url>        
+        <connection>scm:git:https://github.com/phillip-kruger/microprofile-extensions.git</connection>
+        <url>https://github.com/phillip-kruger/microprofile-extensions</url>        
     </scm>
 
     <distributionManagement>
         <site>
             <id>wiki</id>
-            <url>https://github.com/phillip-kruger/microprofile-extentions/wiki</url>
+            <url>https://github.com/phillip-kruger/microprofile-extensions/wiki</url>
         </site>
         
         <snapshotRepository>

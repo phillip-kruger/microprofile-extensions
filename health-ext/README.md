@@ -1,11 +1,11 @@
-# Health API Extentions
+# Health API extensions
 
-This extention gives you some default health endpoints that can be configured using the Config Api
+This extension gives you some default health endpoints that can be configured using the Config Api
 
 ## Usage
 
     <dependency>
-        <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
+        <groupId>com.github.phillip-kruger.microprofile-extensions</groupId>
         <artifactId>health-ext</artifactId>
         <version>1.0.7</version>
     </dependency>

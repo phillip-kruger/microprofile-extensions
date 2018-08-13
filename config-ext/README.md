@@ -1,13 +1,13 @@
-# Config API Extentions
+# Config API extension
 
-This extention gives you some extra configuration sources and some extra converters.
+This extension gives you some extra configuration sources and some extra converters.
 
 ## Usage
 
     <dependency>
-        <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
+        <groupId>com.github.phillip-kruger.microprofile-extensions</groupId>
         <artifactId>config-ext</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </dependency>
 
 ## Config sources
@@ -28,7 +28,7 @@ You can do this by using the REST API to change the config values:
     PUT /config/key/{key} - set the value for {key}
     DELETE /config/key/{key} - delete the configured value for {key}
 
-![REST API](https://raw.githubusercontent.com/phillip-kruger/microprofile-extentions/master/config-ext/memory_config_api.png)
+![REST API](https://raw.githubusercontent.com/phillip-kruger/microprofile-extensions/master/config-ext/memory_config_api.png)
 
 ### Etcd config
 

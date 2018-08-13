@@ -1,13 +1,13 @@
-# REST Client Extentions
+# REST Client extensions
 
 This allows you to use the Config API to map HTTP Response codes to Runtime Exceptions.
 
 ## Usage
 
     <dependency>
-        <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
+        <groupId>com.github.phillip-kruger.microprofile-extensions</groupId>
         <artifactId>restclient-ext</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </dependency>
 
 ## Mapping example:
