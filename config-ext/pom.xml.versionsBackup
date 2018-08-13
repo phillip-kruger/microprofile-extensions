@@ -4,15 +4,22 @@
     <parent>
         <groupId>com.github.phillip-kruger</groupId>
         <artifactId>microprofile-extentions</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.8-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
     <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
-    <artifactId>cdi-filter</artifactId>
+    <artifactId>config-ext</artifactId>
     <packaging>jar</packaging>
     
-    <name>Microprofile extentions :: CDI</name>
-    <description>Simple to use filter for CDI</description>
+    <name>Microprofile extentions :: Config</name>
+    <description>Some default config providers and converters</description>
     
+    <dependencies>
+        <dependency>
+            <groupId>com.coreos</groupId>
+            <artifactId>jetcd-core</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+    </dependencies>
 </project>

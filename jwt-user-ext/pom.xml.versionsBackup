@@ -4,15 +4,23 @@
     <parent>
         <groupId>com.github.phillip-kruger</groupId>
         <artifactId>microprofile-extentions</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.8-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
     <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
-    <artifactId>cdi-filter</artifactId>
+    <artifactId>jwt-user-ext</artifactId>
     <packaging>jar</packaging>
     
-    <name>Microprofile extentions :: CDI</name>
-    <description>Simple to use filter for CDI</description>
+    <name>Microprofile extentions :: JWT User</name>
+    <description>Some user utils for JWT</description>
+    
+    <dependencies>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils-core</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+    </dependencies>
     
 </project>

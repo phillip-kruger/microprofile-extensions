@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-version up</actionName>
+            <displayName>version up</displayName>
+            <goals>
+                <goal>versions:set</goal>
+            </goals>
+            <properties>
+                <newVersion>1.0.8</newVersion>
+            </properties>
+        </action>
+    </actions>

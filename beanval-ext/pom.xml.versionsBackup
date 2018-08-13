@@ -4,15 +4,15 @@
     <parent>
         <groupId>com.github.phillip-kruger</groupId>
         <artifactId>microprofile-extentions</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.8-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
     <groupId>com.github.phillip-kruger.microprofile-extentions</groupId>
-    <artifactId>cdi-filter</artifactId>
+    <artifactId>beanval-ext</artifactId>
     <packaging>jar</packaging>
     
-    <name>Microprofile extentions :: CDI</name>
-    <description>Simple to use filter for CDI</description>
+    <name>MicroProfile extentions :: Bean Validation</name>
+    <description>Some JAX-RS exception mappers for Bean validation </description>
     
 </project>
