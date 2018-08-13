@@ -7,7 +7,7 @@ This allows you to use the Config API to map HTTP Response codes to Runtime Exce
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extensions</groupId>
         <artifactId>restclient-ext</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.9</version>
     </dependency>
 
 ## Mapping example:

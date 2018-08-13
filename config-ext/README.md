@@ -7,7 +7,7 @@ This extension gives you some extra configuration sources and some extra convert
     <dependency>
         <groupId>com.github.phillip-kruger.microprofile-extensions</groupId>
         <artifactId>config-ext</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.9</version>
     </dependency>
 
 ## Config sources
