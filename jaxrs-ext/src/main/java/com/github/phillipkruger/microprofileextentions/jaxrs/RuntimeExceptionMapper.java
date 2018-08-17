@@ -15,6 +15,7 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
 import lombok.extern.java.Log;
 import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  * Translate Runtime exceptions to HTTP response
@@ -36,6 +37,12 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
     @Context 
     private Providers providers;
     
+    @Inject @ConfigProperty(name = "jaxrs-ext.includeClassName", defaultValue = "false")
+    private boolean includeClassName;
+    
+    @Inject @ConfigProperty(name = "jaxrs-ext.stacktraceLogLevel", defaultValue = "FINEST")
+    private String stacktraceLogLevel;
+    
     @Override
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response toResponse(RuntimeException exception) {
@@ -54,7 +61,7 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
                 // You switched it off
                 if(status<0)return handleNotMapped(exception);
                 String reason = getReason(exception);
-                log.log(Level.FINEST, reason, exception);
+                log.log(getLevel(), reason, exception);
                 return Response.status(status).header(REASON, reason).build();
             } else if(exception.getCause()!=null && providers!=null){
                 final Throwable cause = exception.getCause();
@@ -74,14 +81,20 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
             if (cause != null){
                 return getReason(cause);
             }else{
-                return "Unknown [" + exception.getClass().getName() + "] exception";
+                return constructReason(exception, "Unknown exception");
             }
         }
-        return "[" + exception.getClass().getName() + "] " + reason;
+        return constructReason(exception,reason);
+    }
+    
+    private String constructReason(Throwable exception, String message){
+        String premessage = "";
+        if(includeClassName)premessage = "[" + exception.getClass().getName() + "] ";
+        return premessage + message;
     }
     
     private Response handleNotMapped(final Throwable exception){
-        log.log(Level.SEVERE, "Unmapped Runtime Exception", exception);
+        log.log(getLevel(), "Unmapped Runtime Exception", exception);
         
         List<String> reasons = getReasons(exception, new ArrayList<>());
         
@@ -94,7 +107,7 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
     }
     
     private Response handleNullException(){
-        log.log(Level.SEVERE, "Runtime Exception that is null");
+        log.log(getLevel(), "Runtime Exception that is null");
         Response.ResponseBuilder builder = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
         return builder.build();
     }
@@ -107,6 +120,10 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
             return reasons;
         }
         
+    }
+    
+    private Level getLevel(){
+        return Level.parse(stacktraceLogLevel);
     }
     
     private static final String REASON = "reason";

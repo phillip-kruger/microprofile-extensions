@@ -16,3 +16,7 @@ To map a javax.ws.rs.NotAuthorizedException to a 401 status code
 
     javax.ws.rs.NotAuthorizedException/mp-jaxrs-ext/statuscode=401
     
+## Other configuration options
+
+    jaxrs-ext.includeClassName=true : this will include the exception classname in the reason header. Default false.
+    jaxrs-ext.stacktraceLogLevel=OFF|FINE|FINER|FINEST|WARNING|SEVERE|INFO : this will set the level for printing the exception to the log. Default FINEST
