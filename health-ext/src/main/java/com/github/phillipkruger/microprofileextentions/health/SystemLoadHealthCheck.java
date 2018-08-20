@@ -18,8 +18,8 @@ import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
 @ApplicationScoped
 public class SystemLoadHealthCheck implements HealthCheck {
 
-    @Inject @ConfigProperty(name = "health.systemload.maxpercentage", defaultValue = "0.7")
-    private double maxPercentage;
+    @Inject @ConfigProperty(name = "health.systemload.max", defaultValue = "0.7")
+    private double max;
     
     @Override
     public HealthCheckResponse call() {
@@ -40,10 +40,10 @@ public class SystemLoadHealthCheck implements HealthCheck {
                 .withData("processors", availableProcessors)
                 .withData("loadAverage", String.valueOf(systemLoadAverage))
                 .withData("loadAverage per processor", String.valueOf(systemLoadAveragePerProcessors))
-                .withData("loadAverage %", String.valueOf(maxPercentage));
+                .withData("loadAverage max", String.valueOf(max));
 
         if(systemLoadAverage>0){
-            boolean status = systemLoadAveragePerProcessors < maxPercentage;
+            boolean status = systemLoadAveragePerProcessors < max;
             return responseBuilder.state(status).build();
         }else{
             // Load average not available
