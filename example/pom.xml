@@ -41,24 +41,30 @@
         </dependency>
         
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>health-ext</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+<!--        
+        <dependency>
             <groupId>fish.payara.api</groupId>
             <artifactId>payara-api</artifactId>
             <version>${payara-micro.version}</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
+<!--        <dependency>
             <groupId>io.opentracing</groupId>
             <artifactId>opentracing-api</artifactId>
             <version>0.31.0</version>
-            <!--<scope>provided</scope>-->
-        </dependency>
+            <scope>provided</scope>
+        </dependency>-->
 
-        <dependency>
+<!--        <dependency>
             <groupId>io.jaegertracing</groupId>
             <artifactId>jaeger-client</artifactId>
             <version>0.30.3</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
     
@@ -102,19 +108,19 @@
                                     <value>-Dconfigsource.etcd.host=127.0.0.1</value>
                                 </option>
                             </javaCommandLineOptions>
-                            <commandLineOptions>
+<!--                            <commandLineOptions>
                                 <option>
-                                    <key>--postbootcommandfile</key>
+                                    <key>- -postbootcommandfile</key>
                                     <value>${project.build.directory}/postbootcommand.txt</value>
                                 </option>
-                            </commandLineOptions>
+                            </commandLineOptions>-->
                         </configuration>
                     </plugin>
 
 
                 </plugins>
                 
-                <resources>  
+<!--                <resources>  
                     <resource>
                         <filtering>true</filtering>
                         <directory>${project.basedir}</directory>
@@ -123,7 +129,7 @@
                            <include>postbootcommand.txt</include>
                         </includes>
                      </resource> 
-                </resources>
+                </resources>-->
             </build>
             
             
