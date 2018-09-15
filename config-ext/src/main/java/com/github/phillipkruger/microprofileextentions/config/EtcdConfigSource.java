@@ -28,6 +28,9 @@ public class EtcdConfigSource implements ConfigSource {
 
     private static final String KEY_PREFIX = "configsource.etcd.";
 
+    private static final String KEY_ENABLED = KEY_PREFIX + "enabled";
+    private static final boolean DEFAULT_ENABLED = false;
+    
     private static final String KEY_SCHEME = KEY_PREFIX + "scheme";
     private static final String DEFAULT_SCHEME = "http";
 
@@ -47,20 +50,22 @@ public class EtcdConfigSource implements ConfigSource {
     @Override
     public Map<String, String> getProperties() {
         Map<String,String> m = new HashMap<>();
-        ByteSequence bsKey = ByteSequence.fromString("");
+        if(isEnabled()){
+            ByteSequence bsKey = ByteSequence.fromString("");
 
-        CompletableFuture<GetResponse> getFuture = getClient().getKVClient().get(bsKey);
-        try {
-            GetResponse response = getFuture.get();
-            List<KeyValue> kvs = response.getKvs();
-            
-            for(KeyValue kv:kvs){
-                String key = kv.getKey().toStringUtf8();
-                String value = kv.getValue().toStringUtf8();
-                m.put(key, value);
+            CompletableFuture<GetResponse> getFuture = getClient().getKVClient().get(bsKey);
+            try {
+                GetResponse response = getFuture.get();
+                List<KeyValue> kvs = response.getKvs();
+
+                for(KeyValue kv:kvs){
+                    String key = kv.getKey().toStringUtf8();
+                    String value = kv.getValue().toStringUtf8();
+                    m.put(key, value);
+                }
+            } catch (InterruptedException | ExecutionException ex) {
+                log.log(Level.FINEST, "Can not get all config keys and values from etcd Config source: {1}", new Object[]{ex.getMessage()});
             }
-        } catch (InterruptedException | ExecutionException ex) {
-            log.log(Level.FINEST, "Can not get all config keys and values from etcd Config source: {1}", new Object[]{ex.getMessage()});
         }
         
         return m;
@@ -72,17 +77,17 @@ public class EtcdConfigSource implements ConfigSource {
             // in case we are about to configure ourselves we simply ignore that key
             return null;
         }
-
-        ByteSequence bsKey = ByteSequence.fromString(key);
-        CompletableFuture<GetResponse> getFuture = getClient().getKVClient().get(bsKey);
-        try {
-            GetResponse response = getFuture.get();
-            String value = toString(response);
-            return value;
-        } catch (InterruptedException | ExecutionException ex) {
-            log.log(Level.FINEST, "Can not get config value for [{0}] from etcd Config source: {1}", new Object[]{key, ex.getMessage()});
+        if(isEnabled()){
+            ByteSequence bsKey = ByteSequence.fromString(key);
+            CompletableFuture<GetResponse> getFuture = getClient().getKVClient().get(bsKey);
+            try {
+                GetResponse response = getFuture.get();
+                String value = toString(response);
+                return value;
+            } catch (InterruptedException | ExecutionException ex) {
+                log.log(Level.FINEST, "Can not get config value for [{0}] from etcd Config source: {1}", new Object[]{key, ex.getMessage()});
+            }
         }
-        
         return null;
     }
 
@@ -96,6 +101,11 @@ public class EtcdConfigSource implements ConfigSource {
             return response.getKvs().get(0).getValue().toStringUtf8();
         }
         return null;
+    }
+    
+    private boolean isEnabled(){
+        Config cfg = ConfigProvider.getConfig();
+        return cfg.getOptionalValue(KEY_ENABLED, Boolean.class).orElse(DEFAULT_ENABLED);
     }
     
     private Client getClient(){
