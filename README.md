@@ -1,3 +1,10 @@
+> 
+> **This is retired. Please use https://www.microprofile-ext.org**
+>
+
+-----------
+
+
 # Microprofile extensions
 
 > Some extensions for MicroProfile
@@ -21,8 +28,8 @@ Tested with
 
 ## List of extensions
 
-* [Config Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/config-ext)
-* [Health Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/health-ext)
-* [OpenApi Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/openapi-ext)
-* [JAX-RS Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/jaxrs-ext)
-* [REST Client Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/restclient-ext)
+* ~~[Config Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/config-ext)~~
+* ~~[Health Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/health-ext)~~
+* ~~[OpenApi Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/openapi-ext)~~
+* ~~[JAX-RS Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/jaxrs-ext)~~
+* ~~[REST Client Ext](https://github.com/phillip-kruger/microprofile-extensions/tree/master/restclient-ext)~~
